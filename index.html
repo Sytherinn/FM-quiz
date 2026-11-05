@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cost of Capital Challenge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f4fb;--card:#ffffff;--ink:#1b1f3a;--muted:#5b6080;--line:#d9dcf0;--accent:#4b4ae0;--accent-ink:#ffffff;--ok:#0e8f6e;--okbg:#dcf5ec;--no:#d63c4a;--nobg:#fde4e6;--hint:#fff2c2;--hintink:#5c4800;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12142a;--card:#1c2040;--ink:#eef0ff;--muted:#a7acd1;--line:#343a6b;--accent:#8c8bff;--accent-ink:#12142a;--ok:#4fd7ae;--okbg:#12372f;--no:#ff7b86;--nobg:#42202a;--hint:#3d3512;--hintink:#ffe58a}}
+:root[data-theme="dark"]{--bg:#12142a;--card:#1c2040;--ink:#eef0ff;--muted:#a7acd1;--line:#343a6b;--accent:#8c8bff;--accent-ink:#12142a;--ok:#4fd7ae;--okbg:#12372f;--no:#ff7b86;--nobg:#42202a;--hint:#3d3512;--hintink:#ffe58a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;font-size:17px;line-height:1.5}
+main{max-width:640px;margin:0 auto;padding:20px 16px 40px}
+h1,h2,.display{font-family:"Fredoka","Trebuchet MS",sans-serif;font-weight:600;line-height:1.15;margin:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-weight:700;color:var(--muted)}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s ease}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:22px 20px}
+.q{font-size:1.3rem;margin-bottom:16px}
+.opts{display:grid;gap:10px}
+.opt{font:inherit;font-weight:700;text-align:left;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:transform .12s ease,border-color .12s}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateY(-2px)}
+.opt b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-family:"Fredoka",sans-serif;font-size:.95rem}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.no{border-color:var(--no);background:var(--nobg)}
+.opt:disabled{cursor:default}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.btn{font:inherit;font-family:"Fredoka",sans-serif;font-weight:600;font-size:1.05rem;border:0;border-radius:99px;padding:12px 26px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.hint{margin-top:14px;padding:10px 14px;border-radius:12px;background:var(--hint);color:var(--hintink);font-weight:700}
+.fb{margin-top:16px;padding:14px 16px;border-radius:14px}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--nobg)}
+.fb h2{font-size:1.25rem;margin-bottom:4px}
+.fb.ok h2{color:var(--ok)}.fb.no h2{color:var(--no)}
+.fb p{margin:0}
+.hide{display:none}
+.big{font-size:4.2rem;margin:6px 0}
+.score{font-size:3rem;color:var(--accent)}
+.pop{animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.center{text-align:center}
+.sub{color:var(--muted);margin:10px 0 0}
+</style>
+</head>
+<body>
+<main>
+<section id="start" class="card center">
+<div class="big" aria-hidden="true">💰</div>
+<h1 style="font-size:2rem">Cost of Capital Challenge</h1>
+<p class="sub">8 questions on cost of debt, preference shares, equity and WACC. Use the hint if you get stuck, but a streak of correct answers feels better.</p>
+<div class="row" style="justify-content:center"><button class="btn" id="go">Start quiz</button></div>
+</section>
+
+<section id="play" class="hide">
+<div class="top"><span id="count">Question 1 of 8</span><span id="streak" aria-live="polite">Streak: 0</span></div>
+<div class="bar" aria-hidden="true"><i id="fill"></i></div>
+<div class="card pop" id="qcard">
+<h2 class="q" id="qtext"></h2>
+<div class="opts" id="opts"></div>
+<div class="hint hide" id="hint"></div>
+<div class="fb hide" id="fb" aria-live="polite"><h2 id="fbh"></h2><p id="fbp"></p></div>
+<div class="row"><button class="btn ghost" id="hintbtn">Show hint</button><button class="btn hide" id="next">Next question</button></div>
+</div>
+</section>
+
+<section id="end" class="card center hide">
+<div class="big" id="emoji" aria-hidden="true">🏆</div>
+<h1>Your score</h1>
+<div class="display score" id="final"></div>
+<p class="sub" id="msg"></p>
+<p class="sub" id="best"></p>
+<div class="row" style="justify-content:center"><button class="btn" id="again">Play again</button></div>
+</section>
+</main>
+<script>
+var Q=[
+{p:"Which source of finance is usually the cheapest for a company, and why?",o:["Equity shares, because dividends are optional","Debt, because interest is tax deductible","Preference shares, because dividends are fixed","Retained earnings, because they cost nothing"],c:1,h:"Think about which payment the taxman lets you deduct.",ok:"Cheap and cheerful!",no:"Oops, the taxman disagrees!",e:"Interest on debt is a tax-deductible expense, so the after-tax cost of debt is lower. Equity is the costliest as shareholders bear the highest risk. Retained earnings are not free: they have an opportunity cost."},
+{p:"A company issues 11% irredeemable debentures of ₹100 at par. The tax rate is 30%. What is the after-tax cost of debt?",o:["11%","7.7%","3.3%","14.3%"],c:1,h:"Kd = I (1 − t) ÷ NP",ok:"Debt-cracked!",no:"Not quite. Did you remember the tax shield?",e:"Kd = I(1 − t) ÷ NP = 11 × (1 − 0.30) ÷ 100 = 7.7%."},
+{p:"8% preference shares of ₹100 are issued at a 5% discount (net proceeds ₹95). What is the cost of preference capital?",o:["8.00%","5.60%","8.42%","7.60%"],c:2,h:"Divide the dividend by what the company actually receives.",ok:"Preference shown!",no:"Close, but check your net proceeds.",e:"Kp = D ÷ NP = 8 ÷ 95 = 8.42%. No tax adjustment is made because preference dividend is not tax deductible."},
+{p:"A share trades at ₹80. Expected dividend next year (D1) is ₹4 and dividends grow at 5% a year. What is the cost of equity (Gordon approach)?",o:["5%","9%","10%","15%"],c:2,h:"Dividend yield plus growth.",ok:"Growth mindset unlocked!",no:"Hmm, don’t forget to add the growth rate.",e:"Ke = D1 ÷ P0 + g = 4 ÷ 80 + 5% = 5% + 5% = 10%."},
+{p:"Risk-free rate is 6%, beta is 1.5 and expected market return is 12%. What is the cost of equity using CAPM?",o:["9%","15%","18%","12%"],c:1,h:"Market risk premium = Rm − Rf = 6%.",ok:"Beta than ever!",no:"Risky answer! Recheck the risk premium.",e:"Ke = Rf + β(Rm − Rf) = 6 + 1.5 × (12 − 6) = 6 + 9 = 15%."},
+{p:"Why is no tax adjustment made when calculating the cost of preference shares?",o:["Preference shares are exempt from all rules","Preference dividend is paid out of profit after tax, so it gives no tax saving","Preference shares have no fixed return","Tax is paid by the preference shareholders only"],c:1,h:"Compare interest with dividend: which one reduces taxable profit?",ok:"Tax-spert!",no:"Taxing question, try again next time!",e:"Dividends, unlike interest, are an appropriation of profit after tax. They do not reduce the company’s taxable income, so there is no tax shield."},
+{p:"A friend says, “Retained earnings are free money, so their cost is zero.” What is the best response?",o:["Correct, no payment is made on them","Wrong, their cost equals the debt cost","Wrong, they carry an opportunity cost, roughly equal to the cost of equity","Correct, but only for large companies"],c:2,h:"What could shareholders have done with that profit?",ok:"Nothing is free!",no:"Free lunch denied!",e:"Shareholders could have taken the profit as dividends and invested it elsewhere. So retained earnings have an implicit (opportunity) cost, taken as equal to Ke."},
+{p:"Capital structure: equity ₹6,00,000 at 15% and debt ₹4,00,000 at 7% after tax. What is the WACC using these book value weights?",o:["11.0%","11.8%","12.5%","22.0%"],c:1,h:"WACC = Σ (weight × cost). Weights here are 0.6 and 0.4.",ok:"WACC-ing it out of the park!",no:"Weigh in again!",e:"Weighted costs: equity 6,00,000 × 15% = 90,000; debt 4,00,000 × 7% = 28,000. Total 1,18,000 ÷ 10,00,000 = 11.8%. (Check: 0.6 × 15 + 0.4 × 7 = 9 + 2.8 = 11.8%.)"}
+];
+var $=function(i){return document.getElementById(i)};
+var i=0,score=0,streak=0,answered=false,order=[];
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t}return a}
+function show(id){["start","play","end"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+function start(){i=0;score=0;streak=0;show("play");render()}
+function render(){
+var q=Q[i];answered=false;
+$("count").textContent="Question "+(i+1)+" of "+Q.length;
+$("streak").textContent="Streak: "+streak;
+$("fill").style.width=(i/Q.length*100)+"%";
+$("qtext").textContent=q.p;
+$("hint").classList.add("hide");$("hint").textContent="";
+$("fb").classList.add("hide");$("next").classList.add("hide");
+$("hintbtn").classList.remove("hide");
+$("next").textContent=i===Q.length-1?"See my score":"Next question";
+var box=$("opts");box.innerHTML="";
+order=shuffle(q.o.map(function(t,n){return{t:t,r:n===q.c}}));
+order.forEach(function(op,n){
+var b=document.createElement("button");b.className="opt";
+var l=document.createElement("b");l.textContent="ABCD".charAt(n);
+var s=document.createElement("span");s.textContent=op.t;
+b.appendChild(l);b.appendChild(s);
+b.onclick=function(){pick(n)};box.appendChild(b)});
+var c=$("qcard");c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop");
+}
+function pick(n){
+if(answered)return;answered=true;
+var q=Q[i],right=order[n].r;
+var btns=$("opts").children;
+for(var k=0;k<btns.length;k++){btns[k].disabled=true;if(order[k].r)btns[k].classList.add("ok")}
+if(right){score++;streak++}else{btns[n].classList.add("no");streak=0}
+$("streak").textContent="Streak: "+streak+(streak>=3?" 🔥":"");
+var fb=$("fb");fb.className="fb "+(right?"ok":"no");
+$("fbh").textContent=right?q.ok:q.no;$("fbp").textContent=q.e;
+$("hintbtn").classList.add("hide");$("hint").classList.add("hide");
+$("next").classList.remove("hide");$("next").focus();
+}
+function finish(){
+$("fill").style.width="100%";show("end");
+$("final").textContent=score+" / "+Q.length;
+var m,e;
+if(score===Q.length){m="Perfect score. You could run the finance department.";e="🏆"}
+else if(score>=6){m="Strong work. Review the questions you missed and you’re set.";e="🎉"}
+else if(score>=4){m="Good start. Revisit the formulas for debt, equity and WACC, then try again.";e="📚"}
+else{m="Time to revisit the notes. Every expert started here.";e="💪"}
+$("msg").textContent=m;$("emoji").textContent=e;
+var bestv=null;
+try{bestv=parseInt(localStorage.getItem("coc-best"),10);if(isNaN(bestv))bestv=null}catch(x){}
+if(bestv===null||score>bestv){bestv=score;try{localStorage.setItem("coc-best",String(score))}catch(x){}}
+$("best").textContent="Your best on this device: "+bestv+" / "+Q.length;
+}
+$("go").onclick=start;$("again").onclick=start;
+$("next").onclick=function(){i++;if(i>=Q.length)finish();else render()};
+$("hintbtn").onclick=function(){var h=$("hint");h.textContent="Hint: "+Q[i].h;h.classList.remove("hide")};
+</script>
+</body>
+</html>
