@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cost of Capital Challenge</title>
+<title>Leverage and Capital Structure Challenge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
@@ -52,9 +52,9 @@ button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 <body>
 <main>
 <section id="start" class="card center">
-<div class="big" aria-hidden="true">💰</div>
-<h1 style="font-size:2rem">Cost of Capital Challenge</h1>
-<p class="sub">8 questions on cost of debt, preference shares, equity and WACC. Use the hint if you get stuck, but a streak of correct answers feels better.</p>
+<div class="big" aria-hidden="true">⚖️</div>
+<h1 style="font-size:2rem">Leverage and Capital Structure Challenge</h1>
+<p class="sub">10 questions on operating and financial leverage, and the NI, NOI, Traditional and MM approaches. Use the hint if you get stuck, but a streak of correct answers feels better.</p>
 <div class="row" style="justify-content:center"><button class="btn" id="go">Start quiz</button></div>
 </section>
 
@@ -81,14 +81,16 @@ button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 </main>
 <script>
 var Q=[
-{p:"Which source of finance is usually the cheapest for a company, and why?",o:["Equity shares, because dividends are optional","Debt, because interest is tax deductible","Preference shares, because dividends are fixed","Retained earnings, because they cost nothing"],c:1,h:"Think about which payment the taxman lets you deduct.",ok:"Cheap and cheerful!",no:"Oops, the taxman disagrees!",e:"Interest on debt is a tax-deductible expense, so the after-tax cost of debt is lower. Equity is the costliest as shareholders bear the highest risk. Retained earnings are not free: they have an opportunity cost."},
-{p:"A company issues 11% irredeemable debentures of ₹100 at par. The tax rate is 30%. What is the after-tax cost of debt?",o:["11%","7.7%","3.3%","14.3%"],c:1,h:"Kd = I (1 − t) ÷ NP",ok:"Debt-cracked!",no:"Not quite. Did you remember the tax shield?",e:"Kd = I(1 − t) ÷ NP = 11 × (1 − 0.30) ÷ 100 = 7.7%."},
-{p:"8% preference shares of ₹100 are issued at a 5% discount (net proceeds ₹95). What is the cost of preference capital?",o:["8.00%","5.60%","8.42%","7.60%"],c:2,h:"Divide the dividend by what the company actually receives.",ok:"Preference shown!",no:"Close, but check your net proceeds.",e:"Kp = D ÷ NP = 8 ÷ 95 = 8.42%. No tax adjustment is made because preference dividend is not tax deductible."},
-{p:"A share trades at ₹80. Expected dividend next year (D1) is ₹4 and dividends grow at 5% a year. What is the cost of equity (Gordon approach)?",o:["5%","9%","10%","15%"],c:2,h:"Dividend yield plus growth.",ok:"Growth mindset unlocked!",no:"Hmm, don’t forget to add the growth rate.",e:"Ke = D1 ÷ P0 + g = 4 ÷ 80 + 5% = 5% + 5% = 10%."},
-{p:"Risk-free rate is 6%, beta is 1.5 and expected market return is 12%. What is the cost of equity using CAPM?",o:["9%","15%","18%","12%"],c:1,h:"Market risk premium = Rm − Rf = 6%.",ok:"Beta than ever!",no:"Risky answer! Recheck the risk premium.",e:"Ke = Rf + β(Rm − Rf) = 6 + 1.5 × (12 − 6) = 6 + 9 = 15%."},
-{p:"Why is no tax adjustment made when calculating the cost of preference shares?",o:["Preference shares are exempt from all rules","Preference dividend is paid out of profit after tax, so it gives no tax saving","Preference shares have no fixed return","Tax is paid by the preference shareholders only"],c:1,h:"Compare interest with dividend: which one reduces taxable profit?",ok:"Tax-spert!",no:"Taxing question, try again next time!",e:"Dividends, unlike interest, are an appropriation of profit after tax. They do not reduce the company’s taxable income, so there is no tax shield."},
-{p:"A friend says, “Retained earnings are free money, so their cost is zero.” What is the best response?",o:["Correct, no payment is made on them","Wrong, their cost equals the debt cost","Wrong, they carry an opportunity cost, roughly equal to the cost of equity","Correct, but only for large companies"],c:2,h:"What could shareholders have done with that profit?",ok:"Nothing is free!",no:"Free lunch denied!",e:"Shareholders could have taken the profit as dividends and invested it elsewhere. So retained earnings have an implicit (opportunity) cost, taken as equal to Ke."},
-{p:"Capital structure: equity ₹6,00,000 at 15% and debt ₹4,00,000 at 7% after tax. What is the WACC using these book value weights?",o:["11.0%","11.8%","12.5%","22.0%"],c:1,h:"WACC = Σ (weight × cost). Weights here are 0.6 and 0.4.",ok:"WACC-ing it out of the park!",no:"Weigh in again!",e:"Weighted costs: equity 6,00,000 × 15% = 90,000; debt 4,00,000 × 7% = 28,000. Total 1,18,000 ÷ 10,00,000 = 11.8%. (Check: 0.6 × 15 + 0.4 × 7 = 9 + 2.8 = 11.8%.)"}
+{p:"Degree of Operating Leverage (DOL) is calculated as:",o:["EBIT ÷ EBT","Contribution ÷ EBIT","Sales ÷ Contribution","EBT ÷ Contribution"],c:1,h:"Operating leverage sits between sales and EBIT.",ok:"Spot on!",no:"Not this time.",e:"DOL = Contribution ÷ EBIT. It shows how a change in sales is magnified into a change in EBIT because of fixed operating costs."},
+{p:"A firm has no debt and no preference share capital. Its Degree of Financial Leverage (DFL) will be:",o:["Zero","Infinity","Equal to DOL","1"],c:3,h:"DFL = EBIT ÷ EBT. What is EBT when interest is zero?",ok:"Exactly!",no:"Check EBT when interest is zero.",e:"With no interest, EBT = EBIT, so DFL = EBIT ÷ EBT = 1. There is no financial leverage effect."},
+{p:"A firm has Contribution ₹4,00,000, EBIT ₹2,00,000 and EBT ₹1,00,000. What is its Degree of Combined Leverage (DCL)?",o:["2","3","4","8"],c:2,h:"DCL = DOL × DFL = Contribution ÷ EBT.",ok:"Great, you nailed the multiplication!",no:"Try DOL × DFL.",e:"DOL = 4,00,000 ÷ 2,00,000 = 2; DFL = 2,00,000 ÷ 1,00,000 = 2; DCL = 2 × 2 = 4. Equivalently, 4,00,000 ÷ 1,00,000 = 4."},
+{p:"Which leverage measures the effect of a change in EBIT on Earnings Per Share (EPS)?",o:["Operating leverage","Financial leverage","Combined leverage","Working capital leverage"],c:1,h:"Think of the fixed charge that sits between EBIT and EPS.",ok:"Correct!",no:"Not quite. Think about interest.",e:"Financial leverage arises from fixed financial charges such as interest. It magnifies a change in EBIT into a larger change in EPS. DFL = % change in EPS ÷ % change in EBIT."},
+{p:"According to the Net Income (NI) approach, as the firm uses more debt:",o:["Ko falls and the value of the firm rises","Ko rises and the value of the firm falls","Ko and the value of the firm stay constant","Ko is U-shaped"],c:0,h:"In the NI approach, both kd and ke stay constant, and debt is cheaper.",ok:"Right on!",no:"Not this one.",e:"The NI approach assumes constant kd and ke. Since debt is cheaper than equity, a larger share of debt lowers the weighted cost (Ko) and increases the value of the firm. Its extreme conclusion is 100% debt."},
+{p:"NI approach: EBIT ₹2,00,000; debt ₹5,00,000 at 10%; ke = 15%. What is the value of the firm?",o:["₹13,33,333","₹10,00,000","₹20,00,000","₹15,00,000"],c:3,h:"NI = EBIT − Interest. Then S = NI ÷ ke, and V = S + D.",ok:"Numbers on point!",no:"Check your steps: NI, then S, then V.",e:"Interest = 50,000; NI = 1,50,000; S = 1,50,000 ÷ 0.15 = 10,00,000; V = 10,00,000 + 5,00,000 = ₹15,00,000. Then Ko = 2,00,000 ÷ 15,00,000 = 13.33%."},
+{p:"Under the NOI approach, when the firm increases its debt, the cost of equity (ke):",o:["Falls","Rises","Stays constant","Becomes equal to kd"],c:1,h:"Cheap debt is offset by something. What do shareholders demand for extra risk?",ok:"Yes, higher risk, higher return!",no:"Shareholders aren’t that easygoing.",e:"Under the NOI approach, Ko is constant. Shareholders demand a higher return as financial risk rises, so ke increases and exactly offsets the benefit of cheaper debt. Capital structure therefore does not change the firm’s value."},
+{p:"The Traditional approach suggests that the overall cost of capital (Ko), plotted against the debt ratio, is:",o:["A horizontal line","A downward sloping line","An upward sloping line","U-shaped, with an optimal point"],c:3,h:"It falls at first, then rises.",ok:"Perfect curve!",no:"Think about the shape of the curve.",e:"Ko falls as cheaper debt is added, reaches a minimum at the optimal capital structure, and then rises as ke and kd climb due to higher financial risk. The point of minimum Ko is where firm value is maximum."},
+{p:"Modigliani and Miller (without taxes) proved that capital structure is irrelevant through:",o:["Break-even analysis","Arbitrage process","Trading on equity","Dividend discounting"],c:1,h:"Investors use homemade leverage to profit from price differences.",ok:"Arbitrage unlocked!",no:"MM relied on a different tool.",e:"MM showed that if a levered and an unlevered firm of the same risk had different values, investors could earn risk-free profit through arbitrage (using personal borrowing, called homemade leverage). This process pushes the values to equality."},
+{p:"MM with corporate tax: unlevered firm value ₹40,00,000; debt ₹10,00,000; tax rate 30%. What is the value of the levered firm?",o:["₹40,00,000","₹43,00,000","₹47,00,000","₹50,00,000"],c:1,h:"V(L) = V(U) + t × D",ok:"Shielded from error!",no:"Don’t forget the tax shield, tD.",e:"Tax shield = 0.30 × 10,00,000 = ₹3,00,000. V(L) = 40,00,000 + 3,00,000 = ₹43,00,000."}
 ];
 var $=function(i){return document.getElementById(i)};
 var i=0,score=0,streak=0,answered=false,order=[];
@@ -137,8 +139,8 @@ else if(score>=4){m="Good start. Revisit the formulas for debt, equity and WACC,
 else{m="Time to revisit the notes. Every expert started here.";e="💪"}
 $("msg").textContent=m;$("emoji").textContent=e;
 var bestv=null;
-try{bestv=parseInt(localStorage.getItem("coc-best"),10);if(isNaN(bestv))bestv=null}catch(x){}
-if(bestv===null||score>bestv){bestv=score;try{localStorage.setItem("coc-best",String(score))}catch(x){}}
+try{bestv=parseInt(localStorage.getItem("lev-best"),10);if(isNaN(bestv))bestv=null}catch(x){}
+if(bestv===null||score>bestv){bestv=score;try{localStorage.setItem("lev-best",String(score))}catch(x){}}
 $("best").textContent="Your best on this device: "+bestv+" / "+Q.length;
 }
 $("go").onclick=start;$("again").onclick=start;
